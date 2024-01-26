@@ -977,9 +977,7 @@ const TimeLine = ({ el }) => {
   return (
     <Stack direction="row" alignItems="center" justifyContent="space-between">
       <Divider width="46%" />
-      <Typography variant="caption" sx={{ color: theme.palette.text }}>
-        {el.text}
-      </Typography>
+      {el.date}
       <Divider width="46%" />
     </Stack>
   );

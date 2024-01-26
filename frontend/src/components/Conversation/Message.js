@@ -57,7 +57,31 @@ const Message = ({
     getTimeline();
   }, []);
 
-  console.log(openModalImg);
+
+  const groupMessagesByDate = (messages) => {
+    const groupedMessages = [];
+    let currentDate = null;
+
+    messages.forEach((el) => {
+      const messageDate = new Date(el.date_added).toDateString();
+   console.log(messageDate);
+      if (messageDate !== currentDate) {
+        groupedMessages.push({ type: 'divider', date: messageDate });
+        currentDate = messageDate;
+      }
+
+      groupedMessages.push(el);
+    });
+
+    return groupedMessages;
+  };
+
+  const groupedChathistory = groupMessagesByDate(chathistory);
+
+
+
+
+  console.log(groupedChathistory);
 
   return (
     <>
@@ -74,141 +98,151 @@ const Message = ({
   ))
 } */}
 
-        {chathistory.map((el) => {
-          switch (el.type) {
-            case "divider":
-              return <TimeLine el={el} />;
+{groupedChathistory.map((el, index) => {
+            if (el.type === 'divider') {
+              return <TimeLine key={index} el={el} />;
+            }
 
-            case "msg":
-              switch (el.subtype) {
-                case "img":
-                  return (
-                    <MediaMsg
-                      el={el}
-                      menu={menu}
-                      searchTerm={searchTerm}
-                      setAnchorEls={0}
-                      handelmaindelete={handelmaindelete}
-                      ReplyMsgs={ReplyMsgs}
-                      getemoj={getemoj}
-                      closeEmoji={closeEmoji}
-                      handlestar={handlestar}
-                      star={star}
-                      setStar={setStar}
-                      handleUnstar={handleUnstar}
-                    />
-                  );
-                case "video":
-                  return (
-                    <Video
-                      el={el}
-                      menu={menu}
-                      searchTerm={searchTerm}
-                      setAnchorEls={0}
-                      handelmaindelete={handelmaindelete}
-                      ReplyMsgs={ReplyMsgs}
-                      getemoj={getemoj}
-                      closeEmoji={closeEmoji}
-                      handlestar={handlestar}
-                      star={star}
-                      setStar={setStar}
-                      handleUnstar={handleUnstar}
-                    />
-                  );
-                case "Audio":
-                  return (
-                    <Audio
-                      el={el}
-                      menu={menu}
-                      searchTerm={searchTerm}
-                      setAnchorEls={0}
-                      handelmaindelete={handelmaindelete}
-                      ReplyMsgs={ReplyMsgs}
-                      getemoj={getemoj}
-                      closeEmoji={closeEmoji}
-                      handlestar={handlestar}
-                      star={star}
-                      setStar={setStar}
-                      handleUnstar={handleUnstar}
-                    />
-                  );
-                case "doc":
-                  return (
-                    <DocMsg
-                      el={el}
-                      menu={menu}
-                      searchTerm={searchTerm}
-                      setAnchorEls={0}
-                      handelmaindelete={handelmaindelete}
-                      ReplyMsgs={ReplyMsgs}
-                      getemoj={getemoj}
-                      closeEmoji={closeEmoji}
-                      handlestar={handlestar}
-                      star={star}
-                      setStar={setStar}
-                      handleUnstar={handleUnstar}
-                    />
-                  );
+            switch (el.type) {
+              case "divider":
+                return <TimeLine el={el} />;
+  
+              case "msg":
+                switch (el.subtype) {
+                  case "img":
+                    return (
+                      <MediaMsg
+                        el={el}
+                        menu={menu}
+                        searchTerm={searchTerm}
+                        setAnchorEls={0}
+                        handelmaindelete={handelmaindelete}
+                        ReplyMsgs={ReplyMsgs}
+                        getemoj={getemoj}
+                        closeEmoji={closeEmoji}
+                        handlestar={handlestar}
+                        star={star}
+                        setStar={setStar}
+                        handleUnstar={handleUnstar}
+                      />
+                    );
+                  case "video":
+                    return (
+                      <Video
+                        el={el}
+                        menu={menu}
+                        searchTerm={searchTerm}
+                        setAnchorEls={0}
+                        handelmaindelete={handelmaindelete}
+                        ReplyMsgs={ReplyMsgs}
+                        getemoj={getemoj}
+                        closeEmoji={closeEmoji}
+                        handlestar={handlestar}
+                        star={star}
+                        setStar={setStar}
+                        handleUnstar={handleUnstar}
+                      />
+                    );
+                  case "Audio":
+                    return (
+                      <Audio
+                        el={el}
+                        menu={menu}
+                        searchTerm={searchTerm}
+                        setAnchorEls={0}
+                        handelmaindelete={handelmaindelete}
+                        ReplyMsgs={ReplyMsgs}
+                        getemoj={getemoj}
+                        closeEmoji={closeEmoji}
+                        handlestar={handlestar}
+                        star={star}
+                        setStar={setStar}
+                        handleUnstar={handleUnstar}
+                      />
+                    );
+                  case "doc":
+                    return (
+                      <DocMsg
+                        el={el}
+                        menu={menu}
+                        searchTerm={searchTerm}
+                        setAnchorEls={0}
+                        handelmaindelete={handelmaindelete}
+                        ReplyMsgs={ReplyMsgs}
+                        getemoj={getemoj}
+                        closeEmoji={closeEmoji}
+                        handlestar={handlestar}
+                        star={star}
+                        setStar={setStar}
+                        handleUnstar={handleUnstar}
+                      />
+                    );
+  
+                  case "link":
+                    return (
+                      <LinkMsg
+                        el={el}
+                        menu={menu}
+                        searchTerm={searchTerm}
+                        setAnchorEls={0}
+                        handelmaindelete={handelmaindelete}
+                        ReplyMsgs={ReplyMsgs}
+                        getemoj={getemoj}
+                        closeEmoji={closeEmoji}
+                        handlestar={handlestar}
+                        star={star}
+                        setStar={setStar}
+                        handleUnstar={handleUnstar}
+                      />
+                    );
+                  case "reply":
+                    return (
+                      <ReplyMsg
+                        el={el}
+                        menu={menu}
+                        searchTerm={searchTerm}
+                        setAnchorEls={0}
+                        handelmaindelete={handelmaindelete}
+                        ReplyMsgs={ReplyMsgs}
+                        getemoj={getemoj}
+                        closeEmoji={closeEmoji}
+                        handlestar={handlestar}
+                        star={star}
+                        setStar={setStar}
+                        handleUnstar={handleUnstar}
+                      />
+                    );
+  
+                  default:
+                    return (
+                      <TextMsg
+                        el={el}
+                        menu={menu}
+                        searchTerm={searchTerm}
+                        setAnchorEls={0}
+                        handelmaindelete={handelmaindelete}
+                        ReplyMsgs={ReplyMsgs}
+                        getemoj={getemoj}
+                        closeEmoji={closeEmoji}
+                        handlestar={handlestar}
+                        star={star}
+                        setStar={setStar}
+                        handleUnstar={handleUnstar}
+                      />
+                    );
+                }
+                break;
+  
+              default:
+                return <></>;
+            }
 
-                case "link":
-                  return (
-                    <LinkMsg
-                      el={el}
-                      menu={menu}
-                      searchTerm={searchTerm}
-                      setAnchorEls={0}
-                      handelmaindelete={handelmaindelete}
-                      ReplyMsgs={ReplyMsgs}
-                      getemoj={getemoj}
-                      closeEmoji={closeEmoji}
-                      handlestar={handlestar}
-                      star={star}
-                      setStar={setStar}
-                      handleUnstar={handleUnstar}
-                    />
-                  );
-                case "reply":
-                  return (
-                    <ReplyMsg
-                      el={el}
-                      menu={menu}
-                      searchTerm={searchTerm}
-                      setAnchorEls={0}
-                      handelmaindelete={handelmaindelete}
-                      ReplyMsgs={ReplyMsgs}
-                      getemoj={getemoj}
-                      closeEmoji={closeEmoji}
-                      handlestar={handlestar}
-                      star={star}
-                      setStar={setStar}
-                      handleUnstar={handleUnstar}
-                    />
-                  );
 
-                default:
-                  return (
-                    <TextMsg
-                      el={el}
-                      menu={menu}
-                      searchTerm={searchTerm}
-                      setAnchorEls={0}
-                      handelmaindelete={handelmaindelete}
-                      ReplyMsgs={ReplyMsgs}
-                      getemoj={getemoj}
-                      closeEmoji={closeEmoji}
-                      handlestar={handlestar}
-                      star={star}
-                      setStar={setStar}
-                      handleUnstar={handleUnstar}
-                    />
-                  );
-              }
-              break;
+          })}
 
-            default:
-              return <></>;
-          }
-        })}
+
+
+      
 
        
       </Stack>

@@ -425,6 +425,11 @@ const GeneralApp = () => {
   const [openModal, setOpenModal] = useState(0);
   const [openModalImg, setOpenModalImg] = useState(false);
   const [hideSelector, setHideSelector] = useState(true);
+  const [searchTermlist, setSearchTermlist] = useState('');
+
+
+  const filteredData = data
+  .filter((el) => !el.pinned && el.name.toLowerCase().includes(searchTermlist.toLowerCase()));
 
 
   const blobUrl =
@@ -1059,6 +1064,8 @@ const GeneralApp = () => {
               <StyledInputBase
                 placeholder="Search..."
                 inputProps={{ "aria-label": "search" }}
+                value={searchTermlist}
+                 onChange={(e) => setSearchTermlist(e.target.value)}
               />
             </Search>
           </Stack>
@@ -1077,25 +1084,19 @@ const GeneralApp = () => {
             direction="column"
             sx={{ flexGrow: 1, overflow: "scroll", height: "100%" }}
           >
+             
             <Stack spacing={2.4}>
-              {data
-                .filter((el) => !el.pinned)
-                .map((el) => (
-                  <ChatElement
-                    key={el.id}
-                    {...el}
-                    onClick={(e) =>
-                      handleChatClick(
-                        chatmasterid,
-                        userid,
-                        el.id,
-                        el.img,
-                        el.name,
-                        e
-                      )
-                    }
-                  />
-                ))}
+            {filteredData.map((el) => (
+        <ChatElement
+          key={el.id}
+          {...el}
+          onClick={(e) =>
+            handleChatClick(chatmasterid, userid, el.id, el.img, el.name, e)
+          }
+          searchTerm={searchTerm}
+          setSearchTerm={setSearchTerm}
+        />
+      ))}
             </Stack>
           </Stack>
         </Stack>

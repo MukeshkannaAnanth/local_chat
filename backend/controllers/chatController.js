@@ -48,10 +48,9 @@ const storeMessage = async (req, res) => {
     const msg_sender = await db.raw(
       `SELECT sender_income,receiver_income FROM chatmaster WHERE sender_id=${senderid}`
     );
-
+   console.log('sender',senderid);
     const data = msg_sender;
-  console.log(`check chat master`,msg_sender[0].receiver_income);
-    if (senderid==5) {
+    if (msg_sender[0]?.sender_income==msg_sender[0]?.receiver_income) {
       var income = "true";
       var outcome = "false";
     } else {
@@ -60,6 +59,10 @@ const storeMessage = async (req, res) => {
     }
 
     var docsimg = req.file ? "img" : "";
+
+    const currentDate = moment();
+    const formattedDate = currentDate.format('YYYY-MM-DD');
+    
 
     if(req.file){
       const filenamedocs = req.file.filename;
@@ -121,6 +124,7 @@ const isVideo = videoExtensions.some(ext => filenamedocs.toLowerCase().endsWith(
       blob_url: audio ? audio : '',
       incoming1 : income=== 'true' ? 'false' : 'true',
       outgoing1 : outcome=== 'true' ? 'false' : 'true',
+      date_added:formattedDate
     };
     
     function isGoogleMapsLink(input) {
@@ -420,7 +424,8 @@ const cheackChatMaster = async(req,res) => {
   const { sender_id,receiver_id } = req.body;
   const currentDate = new Date();
   const formattedDate = moment(currentDate).format('YYYY-MM-DD HH:mm:ss');
-  
+  const frdDate = currentDate.format('YYYY-MM-DD');
+
   const formattedTime = moment(currentDate).format('hh:mm A');
     
   const chatid = await createChatMasterId();
@@ -466,6 +471,7 @@ const cheackChatMaster = async(req,res) => {
       blob_url: '',
       incoming1: income === 'true' ? 'false' : 'true',
       outgoing1: outcome === 'true' ? 'false' : 'true',
+      date_added:frdDate
     };
   
     // Second insert operation

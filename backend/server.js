@@ -36,6 +36,9 @@ try {
     });
   })
 
+
+ 
+
   db.raw('SELECT 1')
   .then(() => {
     console.log('Connected to the database!');

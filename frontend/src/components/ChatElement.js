@@ -4,7 +4,7 @@ import StyledBadge from './StyledBadge';
 import { useState } from 'react';
 
 //single chat element
-const ChatElement = ({id,name, img, msg, time,online, unread, onClick, profilepic}) => {
+const ChatElement = ({id,name, img, msg, time,online, unread, onClick, profilepic,setSearchTerm,searchTerm}) => {
 
    const [senderid,setSenderid] = useState(null);
 
@@ -27,7 +27,9 @@ const ChatElement = ({id,name, img, msg, time,online, unread, onClick, profilepi
         color: theme.palette.mode === 'light'? "#000" : "#fff"
       }}
         p={2}>
-        <Stack direction="row" alignItems='center' justifyContent='space-between' onClick={handleClick}>
+        <Stack direction="row" alignItems='center' justifyContent='space-between' onClick={handleClick} style={{
+          width:"228px"
+        }}>
           <Stack direction='row' spacing={2}>
             {online ? <StyledBadge overlap='circular' anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
               variant="dot">
